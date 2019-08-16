@@ -77,7 +77,7 @@ class Sidebar extends Component {
   // Fetch list of entries
   fetchEntries = pagenumber => {
     this.setState({ isLoading: true });
-    const url = `/react_eugenics_reporting/json.php?username=${
+    const url = `http://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
       this.state.username
     }&pagenumber=${pagenumber}`;
     console.log(url);

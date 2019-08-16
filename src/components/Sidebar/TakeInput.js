@@ -61,7 +61,8 @@ class TakeInput extends Component {
   handleSubmit = e => {
     // console.log(this.state.form);
     this.setState({ isLoading: true });
-    const url = "/react_eugenics_reporting/insert.php";
+    const url =
+      "http://www.eugenicspharma.in/react_eugenics_reporting/insert.php";
     const submit_form = {
       ...this.state.form,
       username: this.props.send.username,
