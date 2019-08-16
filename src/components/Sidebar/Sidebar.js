@@ -73,10 +73,8 @@ class Sidebar extends Component {
         this.fetchEntries(1);
       });
     }
-    // if (this.state.isLoading == false) {
-    //   this.handleClick();
-    // }
   }
+  // Fetch list of entries
   fetchEntries = pagenumber => {
     this.setState({ isLoading: true });
     const url = `/react_eugenics_reporting/json.php?username=${
@@ -94,10 +92,17 @@ class Sidebar extends Component {
         <div className="wrapper">
           <nav className={this.state.nav}>
             <div className="sidebar-header">
-              <h3>sidebar</h3>
+              <img src="/logo.png" alt="company logo" />
+              <h3>Eugenics</h3>
             </div>
             <ul className="list-unstyled ">
-              <p>Eugenics</p>
+              <p>
+                <i
+                  className="fas fa-user fa-lg"
+                  style={{ paddingRight: "0.2em" }}
+                />
+                {this.state.username}
+              </p>
               <li className={!this.props.entries ? "active" : null}>
                 <Link to="/">Home</Link>
               </li>
@@ -147,7 +152,10 @@ class Sidebar extends Component {
                 onClick={this.logout}
               >
                 Logout
-                <i className="fas fa-sign-out-alt pad-takeinput" />
+                <i
+                  className="fas fa-sign-out-alt pad-takeinput"
+                  style={{ paddingLeft: "0.2em" }}
+                />
                 {/* <span>Logout</span> */}
               </button>
             </nav>
