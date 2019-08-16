@@ -38,7 +38,8 @@ class Login extends Component {
   };
   handleClick = e => {
     this.setState({ isloading: true });
-    const url = "/react_eugenics_reporting/login.php";
+    const url =
+      "http://www.eugenicspharma.in/react_eugenics_reporting/login.php";
     const login = {
       username: this.state.username,
       password: this.state.password
