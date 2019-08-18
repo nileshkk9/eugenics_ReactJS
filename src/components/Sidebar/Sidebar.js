@@ -77,29 +77,32 @@ class Sidebar extends Component {
     }
   }
   // Fetch list of entries
-  fetchEntries = pagenumber => {
+  fetchEntries = (pagenumber, sortOption = null) => {
+    //start loading spinner
     this.setState({ isLoading: true });
-    const url = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
+
+    //to request data
+    //if sortOption is null sort by date else sort by the given options in php server side
+
+    const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
       this.state.username
-    }&pagenumber=${pagenumber}`;
-    console.log(url);
+    }&pagenumber=${pagenumber}&sortBy=${sortOption}`;
+
+    // console.log(url);
+    this.axiosRequest(URL);
+  };
+
+  axiosRequest = url => {
     Axios.get(url).then(res => {
       this.setState({ ...this.state, json: res.data, isLoading: false });
-      console.log(this.state);
+      console.log(this.state.json);
     });
-  };
-  sortByDate = () => {
-    return 1;
-  };
-  sortByName = () => {
-    return 1;
   };
 
   //dropmenu functions called from dropmenu component
   sortDropmenu = e => {
     const option = e.target.value;
-    if (option === "name") this.sortByName();
-    else if (option === "date") this.sortByDate();
+    this.fetchEntries(this.state.activePage, option);
   };
 
   render() {

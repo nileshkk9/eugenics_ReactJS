@@ -18,14 +18,17 @@ const Listitem = props => {
         style={{ backgroundColor: random() }}
       >
         {props.data.docname.substring(0, 2) === "Dr"
-          ? props.data.docname[3].toUpperCase()
+          ? props.data.docname
+              .substring(3, props.data.docname.length)
+              .trim()[0]
+              .toUpperCase()
           : props.data.docname[0].toUpperCase()}
       </div>
       {/* {console.log(props.data)} */}
 
       <div className="items">
         <div className="left-elements">
-          <span className="name-listitem">{props.data.docname}</span>
+          <span className="name-listitem">{props.data.docname} </span>
           <span className="place-listitem">{props.data.place}</span>
         </div>
         <span className="date-listitem">
