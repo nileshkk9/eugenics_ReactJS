@@ -6,6 +6,7 @@ import Listitem from "../Listitem/Listitem";
 import Pagination from "react-js-pagination";
 import Axios from "axios";
 import Spinner from "../SpinnerV3/Spinner";
+import Dropmenu from "../Dropmenu/Dropmenu";
 class Sidebar extends Component {
   state = {
     nav: "sidebar",
@@ -28,6 +29,7 @@ class Sidebar extends Component {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude
         };
+        console.log(location);
         const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${
           location.latitude
         }&lon=${location.longitude}`;
@@ -77,7 +79,7 @@ class Sidebar extends Component {
   // Fetch list of entries
   fetchEntries = pagenumber => {
     this.setState({ isLoading: true });
-    const url = `http://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
+    const url = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
       this.state.username
     }&pagenumber=${pagenumber}`;
     console.log(url);
@@ -86,6 +88,20 @@ class Sidebar extends Component {
       console.log(this.state);
     });
   };
+  sortByDate = () => {
+    return 1;
+  };
+  sortByName = () => {
+    return 1;
+  };
+
+  //dropmenu functions called from dropmenu component
+  sortDropmenu = e => {
+    const option = e.target.value;
+    if (option === "name") this.sortByName();
+    else if (option === "date") this.sortByDate();
+  };
+
   render() {
     return (
       <div>
@@ -145,6 +161,11 @@ class Sidebar extends Component {
                 <i className="fas fa-align-left" />
                 {/* <span>Toggle Sidebar</span> */}
               </button>
+
+              {/* Dropdown menu */}
+              {this.props.entries ? (
+                <Dropmenu sort={this.sortDropmenu} />
+              ) : null}
 
               <button
                 type="button"

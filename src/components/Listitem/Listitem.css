@@ -43,6 +43,9 @@
   .place-listitem {
     font-size: 0.8em;
   }
+  .date-listitem {
+    font-size: 0.8em;
+  }
 }
 @keyframes fadein {
   0% {
