@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import Axios from "axios";
 import Spinner from "../SpinnerV3/Spinner";
 import Dropmenu from "../Dropmenu/Dropmenu";
+import { isMobile } from "react-device-detect";
 class Sidebar extends Component {
   state = {
     nav: "sidebar",
@@ -166,28 +167,35 @@ class Sidebar extends Component {
               </button>
 
               {/* Dropdown menu */}
-              {this.props.entries ? (
+              {this.state.nav === "sidebar" && isMobile ? null : this.props
+                  .entries ? (
                 <Dropmenu sort={this.sortDropmenu} />
               ) : null}
-
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={this.logout}
-              >
-                Logout
-                <i
-                  className="fas fa-sign-out-alt pad-takeinput"
-                  style={{ paddingLeft: "0.2em" }}
-                />
-                {/* <span>Logout</span> */}
-              </button>
+              {this.state.nav === "sidebar" && isMobile ? null : (
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={this.logout}
+                >
+                  Logout
+                  <i
+                    className="fas fa-sign-out-alt pad-takeinput"
+                    style={{ paddingLeft: "0.2em" }}
+                  />
+                  {/* <span>Logout</span> */}
+                </button>
+              )}
             </nav>
-            {this.props.isInput ? <TakeInput send={this.state} /> : null}
+            {this.state.nav === "sidebar" && isMobile ? null : this.props
+                .isInput ? (
+              <TakeInput send={this.state} />
+            ) : null}
+            {}
             {/* sidebar with entires route */}
             {/* -------------entries route is called--------------------------- */}
-
-            {this.props.entries ? (
+            {/* if sidebar is active and it is mobile user don't render list */}
+            {this.state.nav === "sidebar" && isMobile ? null : this.props
+                .entries ? (
               this.state.isLoading ? (
                 <Spinner />
               ) : (
@@ -202,8 +210,10 @@ class Sidebar extends Component {
                 </div>
               )
             ) : null}
+
             {/* -----------------------render pagination---------------- */}
-            {this.props.entries ? (
+            {this.state.nav === "sidebar" && isMobile ? null : this.props
+                .entries ? (
               this.state.isLoading ? null : (
                 <div className="pagination-listview">
                   <Pagination
@@ -218,6 +228,7 @@ class Sidebar extends Component {
                 </div>
               )
             ) : null}
+
             {/* ----------------pagination ended--------------- */}
           </div>
         </div>
