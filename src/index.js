@@ -8,7 +8,7 @@ import Main from "./components/Main/Main";
 import Login from "./components/Login/Login";
 import NotFound from "./components/NotFound/NotFound";
 import PrivateRouter from "./components/PrivateRouter";
-import Listview from "./components/Listview/Listview";
+// import Listview from "./components/Listview/Listview";
 
 const routing = (
   <BrowserRouter>
@@ -16,7 +16,7 @@ const routing = (
       <Switch>
         <Route path="/" component={Login} exact />
         <PrivateRouter path="/main" component={Main} />
-        <PrivateRouter path="/entries" component={Listview} />
+        {/* <PrivateRouter path="/entries" component={Listview} /> */}
         <Route component={NotFound} />
       </Switch>
     </div>

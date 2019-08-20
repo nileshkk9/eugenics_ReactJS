@@ -15,7 +15,9 @@ class Sidebar extends Component {
     fullAddress: "",
     sidebarPadding: "260px",
     activePage: 1,
-    isLoading: false
+    isLoading: false,
+    askingInput: true,
+    askingList: false
   };
 
   //Get location from gps and geo reverse encoding
@@ -64,6 +66,14 @@ class Sidebar extends Component {
       nav: this.state.nav === "sidebar" ? "sidebar sidebar-active" : "sidebar",
       sidebarPadding: this.state.sidebarPadding === "260px" ? "20px" : "260px"
     });
+  };
+
+  handleTab = e => {
+    const val = e.target.id;
+    if (val === "home") this.setState({ askingInput: true, askingList: false });
+    else if (val === "entries")
+      this.setState({ askingInput: false, askingList: true });
+    console.log(val);
   };
 
   componentDidMount() {
@@ -123,17 +133,25 @@ class Sidebar extends Component {
                 />
                 {this.state.username}
               </p>
-              <li className={!this.props.entries ? "active" : null}>
-                <Link to="/">Home</Link>
+              <li className={this.state.askingInput ? "active" : null}>
+                <p onClick={this.handleTab} id="home">
+                  Home
+                </p>
               </li>
-              <li className={this.props.entries ? "active" : null}>
-                <Link to="/entries">Entries</Link>
+              <li className={this.state.askingList ? "active" : null}>
+                <p onClick={this.handleTab} id="entries">
+                  Entries
+                </p>
               </li>
-              <li>
-                <Link to="/download">Download </Link>
+              <li className={null}>
+                <p onClick={this.handleTab} id="download">
+                  Download
+                </p>
               </li>
-              <li>
-                <Link to="/contact">Contact</Link>
+              <li className={null}>
+                <p onClick={this.handleTab} id="contact">
+                  Contact
+                </p>
               </li>
             </ul>
 
@@ -167,8 +185,8 @@ class Sidebar extends Component {
               </button>
 
               {/* Dropdown menu */}
-              {this.state.nav === "sidebar" && isMobile ? null : this.props
-                  .entries ? (
+              {this.state.nav === "sidebar" && isMobile ? null : this.state
+                  .askingList ? (
                 <Dropmenu sort={this.sortDropmenu} />
               ) : null}
               {this.state.nav === "sidebar" && isMobile ? null : (
@@ -186,16 +204,16 @@ class Sidebar extends Component {
                 </button>
               )}
             </nav>
-            {this.state.nav === "sidebar" && isMobile ? null : this.props
-                .isInput ? (
+            {this.state.nav === "sidebar" && isMobile ? null : this.state
+                .askingInput ? (
               <TakeInput send={this.state} />
             ) : null}
             {}
             {/* sidebar with entires route */}
             {/* -------------entries route is called--------------------------- */}
             {/* if sidebar is active and it is mobile user don't render list */}
-            {this.state.nav === "sidebar" && isMobile ? null : this.props
-                .entries ? (
+            {this.state.nav === "sidebar" && isMobile ? null : this.state
+                .askingList ? (
               this.state.isLoading ? (
                 <Spinner />
               ) : (
@@ -212,8 +230,8 @@ class Sidebar extends Component {
             ) : null}
 
             {/* -----------------------render pagination---------------- */}
-            {this.state.nav === "sidebar" && isMobile ? null : this.props
-                .entries ? (
+            {this.state.nav === "sidebar" && isMobile ? null : this.state
+                .askingList ? (
               this.state.isLoading ? null : (
                 <div className="pagination-listview">
                   <Pagination

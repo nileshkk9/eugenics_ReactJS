@@ -101,13 +101,21 @@ a:focus {
   font-size: 1.1em;
   display: block;
 }
-
-.sidebar ul li a:hover {
-  color: #7386d5;
-  background: #fff;
+.sidebar ul li p {
+  margin: 0;
+  font-size: 1.1em;
+  display: block;
+  cursor: pointer;
+  font-weight: 400;
 }
 
-.sidebar ul li.active > a,
+.sidebar ul li p:hover {
+  color: #7386d5;
+  background: #fff;
+  cursor: pointer;
+}
+
+.sidebar ul li.active > p,
 a[aria-expanded="true"] {
   color: #fff;
   background: #6d7fcc;
