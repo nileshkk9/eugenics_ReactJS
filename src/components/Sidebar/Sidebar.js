@@ -61,9 +61,10 @@ class Sidebar extends Component {
     localStorage.removeItem("LoginData");
     window.location.href = "/";
   };
+  
   handlePageChange = pageNumber => {
     // console.log(pageNumber);
-    this.fetchEntries(pageNumber);
+    this.fetchEntries(pageNumber, dropmenu_value);
     this.setState({ activePage: pageNumber });
   };
 
@@ -120,7 +121,7 @@ class Sidebar extends Component {
       this.state.username
     }&pagenumber=${pagenumber}&sortby=${sortOption}`;
 
-    // console.log(URL);
+    console.log(URL);
     this.axiosRequest(URL);
   };
 
@@ -138,6 +139,7 @@ class Sidebar extends Component {
   //dropmenu functions called from dropmenu component
   sortDropmenu = e => {
     const option = e.target.value;
+    dropmenu_value = option;
     console.log(option);
     this.fetchEntries(this.state.activePage, option);
   };
@@ -284,3 +286,4 @@ class Sidebar extends Component {
 }
 // let sidebarPadding = "260px";
 export default Sidebar;
+let dropmenu_value = "date";
