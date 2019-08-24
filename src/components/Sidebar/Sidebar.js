@@ -8,6 +8,7 @@ import Axios from "axios";
 import Spinner from "../SpinnerV3/Spinner";
 import Dropmenu from "../Dropmenu/Dropmenu";
 import { isMobile } from "react-device-detect";
+import DownloadCSV from "../DownloadCSV/DowloadCSV";
 class Sidebar extends Component {
   state = {
     nav: "sidebar",
@@ -17,7 +18,8 @@ class Sidebar extends Component {
     activePage: 1,
     isLoading: false,
     askingInput: true,
-    askingList: false
+    askingList: false,
+    askingDownload: false
   };
 
   //Get location from gps and geo reverse encoding
@@ -46,6 +48,9 @@ class Sidebar extends Component {
               loc: data.display_name.split(",", 1)[0]
             });
             // console.log(this.state.fullAddress);
+          })
+          .catch(error => {
+            console.log("Unable to fetch location: ", error);
           });
       });
     } else {
@@ -61,6 +66,7 @@ class Sidebar extends Component {
     this.fetchEntries(pageNumber);
     this.setState({ activePage: pageNumber });
   };
+
   handleClick = () => {
     this.setState({
       nav: this.state.nav === "sidebar" ? "sidebar sidebar-active" : "sidebar",
@@ -70,9 +76,24 @@ class Sidebar extends Component {
 
   handleTab = e => {
     const val = e.target.id;
-    if (val === "home") this.setState({ askingInput: true, askingList: false });
+    if (val === "home")
+      this.setState({
+        askingInput: true,
+        askingList: false,
+        askingDownload: false
+      });
     else if (val === "entries")
-      this.setState({ askingInput: false, askingList: true });
+      this.setState({
+        askingInput: false,
+        askingList: true,
+        askingDownload: false
+      });
+    else if (val === "download")
+      this.setState({
+        askingInput: false,
+        askingList: false,
+        askingDownload: true
+      });
     console.log(val);
   };
 
@@ -104,10 +125,14 @@ class Sidebar extends Component {
   };
 
   axiosRequest = url => {
-    Axios.get(url).then(res => {
-      this.setState({ ...this.state, json: res.data, isLoading: false });
-      console.log(this.state.json);
-    });
+    Axios.get(url)
+      .then(res => {
+        this.setState({ ...this.state, json: res.data, isLoading: false });
+        console.log(this.state.json);
+      })
+      .catch(error => {
+        console.log("Unable to fetch: ", error);
+      });
   };
 
   //dropmenu functions called from dropmenu component
@@ -143,7 +168,7 @@ class Sidebar extends Component {
                   Entries
                 </p>
               </li>
-              <li className={null}>
+              <li className={this.state.askingDownload ? "active" : null}>
                 <p onClick={this.handleTab} id="download">
                   Download
                 </p>
@@ -174,6 +199,7 @@ class Sidebar extends Component {
             </ul>
           </nav>
           <div id="content" style={{ paddingLeft: this.state.sidebarPadding }}>
+            {/* ----------------------------------------NAVBAR------------------------------------------- */}
             <nav className="navbar navbar-light bg-light">
               <button
                 type="button"
@@ -204,50 +230,51 @@ class Sidebar extends Component {
                 </button>
               )}
             </nav>
+            {/* -----------------------------------NAVBAR END------------------------------------------ */}
+            {/* ---------------------------------------- INPUT---------------------------------------------- */}
             {this.state.nav === "sidebar" && isMobile ? null : this.state
                 .askingInput ? (
               <TakeInput send={this.state} />
             ) : null}
-            {}
-            {/* sidebar with entires route */}
-            {/* -------------entries route is called--------------------------- */}
+            {/* ---------------------------------------- INPUT END---------------------------------------------- */}
+
+            {/* ---------------------------------------- ENTRIES ---------------------------------------------- */}
             {/* if sidebar is active and it is mobile user don't render list */}
             {this.state.nav === "sidebar" && isMobile ? null : this.state
                 .askingList ? (
               this.state.isLoading ? (
                 <Spinner />
               ) : (
-                <div className="w3-container">
-                  <ul className="w3-ul w3-card-4">
-                    {this.state.json
-                      ? this.state.json.map((data, i) => (
-                          <Listitem data={data} key={i} />
-                        ))
-                      : null}
-                  </ul>
-                </div>
+                <React.Fragment>
+                  <div className="w3-container">
+                    <ul className="w3-ul w3-card-4">
+                      {this.state.json
+                        ? this.state.json.map((data, i) => (
+                            <Listitem data={data} key={i} />
+                          ))
+                        : null}
+                    </ul>
+                  </div>
+                  <div className="pagination-listview">
+                    <Pagination
+                      activePage={this.state.activePage}
+                      itemsCountPerPage={10}
+                      totalItemsCount={450}
+                      pageRangeDisplayed={5}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                      onChange={this.handlePageChange}
+                    />
+                  </div>
+                </React.Fragment>
               )
             ) : null}
+            {/* ---------------------------------------- ENTRIES END-------------------------------------------- */}
 
-            {/* -----------------------render pagination---------------- */}
             {this.state.nav === "sidebar" && isMobile ? null : this.state
-                .askingList ? (
-              this.state.isLoading ? null : (
-                <div className="pagination-listview">
-                  <Pagination
-                    activePage={this.state.activePage}
-                    itemsCountPerPage={10}
-                    totalItemsCount={450}
-                    pageRangeDisplayed={5}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    onChange={this.handlePageChange}
-                  />
-                </div>
-              )
+                .askingDownload ? (
+              <DownloadCSV username={this.state.username} />
             ) : null}
-
-            {/* ----------------pagination ended--------------- */}
           </div>
         </div>
       </div>

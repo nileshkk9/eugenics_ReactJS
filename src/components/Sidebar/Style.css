@@ -208,6 +208,18 @@ input[type="text"]:focus {
   width: 85%;
   border: 2px solid #555;
 }
+.dropdown-select {
+  width: 50%;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  /* transition: 0.5s; */
+  outline: none;
+  margin: 5px;
+  padding: 5px;
+}
+.dropdown-select:focus {
+  width: 50%;
+}
 
 select {
   width: 80%;
@@ -243,15 +255,9 @@ select:focus {
              pagination
 -----------------------------------------*/
 .pagination-listview {
-  position: relative;
-  /* padding-left: 50%; */
-  /* bottom: 0px;
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center; */
-  top: 1%;
-  /* background-color: #6d7fcc; */
+  justify-content: center;
+  margin-top: 10px;
 }
 
 @keyframes fadein {
