@@ -71,6 +71,7 @@ class Login extends Component {
             <div className="header-login">LOG IN</div>
 
             <div className="tbox-login">
+              <i className="fas fa-user" />
               <input
                 id="username"
                 type="text"
@@ -81,6 +82,7 @@ class Login extends Component {
               />
             </div>
             <div className="tbox-login">
+              <i className="fas fa-lock" />
               <input
                 id="password"
                 type="password"

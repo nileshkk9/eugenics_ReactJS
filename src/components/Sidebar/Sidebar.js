@@ -104,23 +104,23 @@ class Sidebar extends Component {
       const state = JSON.parse(localStorage.getItem("LoginData"));
       // console.log(state);
       this.setState({ ...state }, () => {
-        this.fetchEntries(1);
+        this.fetchEntries(this.state.activePage);
       });
     }
   }
   // Fetch list of entries
-  fetchEntries = (pagenumber, sortOption = null) => {
+  fetchEntries = (pagenumber, sortOption = "date") => {
     //start loading spinner
     this.setState({ isLoading: true });
 
     //to request data
-    //if sortOption is null sort by date else sort by the given options in php server side
+    //if sortOption is date sort by date else sort by the given options in php server side
 
     const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
       this.state.username
-    }&pagenumber=${pagenumber}&sortBy=${sortOption}`;
+    }&pagenumber=${pagenumber}&sortby=${sortOption}`;
 
-    // console.log(url);
+    // console.log(URL);
     this.axiosRequest(URL);
   };
 
@@ -138,6 +138,7 @@ class Sidebar extends Component {
   //dropmenu functions called from dropmenu component
   sortDropmenu = e => {
     const option = e.target.value;
+    console.log(option);
     this.fetchEntries(this.state.activePage, option);
   };
 
@@ -150,7 +151,7 @@ class Sidebar extends Component {
               <img src="/logo.png" alt="company logo" />
               <h3>Eugenics</h3>
             </div>
-            <ul className="list-unstyled ">
+            <ul className="list-unstyled">
               <p>
                 <i
                   className="fas fa-user fa-lg"
@@ -192,9 +193,9 @@ class Sidebar extends Component {
               </li>
 
               <li>
-                <Link to="/website" className="article">
+                <a href="https://www.eugenicspharma.in" className="article">
                   Back to website
-                </Link>
+                </a>
               </li>
             </ul>
           </nav>

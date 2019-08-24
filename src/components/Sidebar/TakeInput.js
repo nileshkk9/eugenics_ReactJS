@@ -3,7 +3,6 @@ import "./Style.css";
 import axios from "axios";
 import "../Loading/loading.css";
 import "../Loading/loading-btn.css";
-// import { getLocation } from "../Location/Location";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 class TakeInput extends Component {
@@ -90,6 +89,7 @@ class TakeInput extends Component {
         console.log(res.data);
       })
       .catch(error => {
+        this.setState({ isLoading: false });
         console.log(error);
         this.notify("error");
       });
@@ -190,7 +190,7 @@ class TakeInput extends Component {
             onClick={this.handleSubmit}
             disabled={!this.validateForm()}
           >
-            <i className="fas fa-notes-medical pad-takeinput" />
+            <i className="fas fa-notes-medical pad-takeinput fa-lg" />
             {this.state.isLoading === true ? (
               <div className="ld ld-ring ld-spin" />
             ) : null}

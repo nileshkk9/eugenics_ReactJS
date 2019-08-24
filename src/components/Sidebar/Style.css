@@ -46,7 +46,7 @@ a:focus {
   margin: 40px 0;
 }
 .pad-takeinput {
-  margin: 0.2rem 0.2rem 0rem 0rem;
+  margin-right: 5px;
 }
 
 /* ---------------------------------------------------
@@ -267,4 +267,10 @@ select:focus {
   100% {
     opacity: 1;
   }
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
 }
