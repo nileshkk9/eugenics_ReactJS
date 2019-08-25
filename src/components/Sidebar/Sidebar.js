@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./Style.css";
 import TakeInput from "./TakeInput";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import Spinner from "../SpinnerV3/Spinner";
 import Dropmenu from "../Dropmenu/Dropmenu";
 import { isMobile } from "react-device-detect";
 import DownloadCSV from "../DownloadCSV/DowloadCSV";
-class Sidebar extends Component {
+class Sidebar extends PureComponent {
   state = {
     nav: "sidebar",
     loc: "",
@@ -21,7 +21,10 @@ class Sidebar extends Component {
     askingList: false,
     askingDownload: false
   };
-
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.askingList === nextState.askingList) return false;
+  //   return true;
+  // }
   //Get location from gps and geo reverse encoding
   getLocation = () => {
     var location = {
@@ -61,7 +64,7 @@ class Sidebar extends Component {
     localStorage.removeItem("LoginData");
     window.location.href = "/";
   };
-  
+
   handlePageChange = pageNumber => {
     // console.log(pageNumber);
     this.fetchEntries(pageNumber, dropmenu_value);
@@ -76,6 +79,7 @@ class Sidebar extends Component {
   };
 
   handleTab = e => {
+    if (isMobile) this.handleClick();
     const val = e.target.id;
     if (val === "home")
       this.setState({
@@ -159,7 +163,7 @@ class Sidebar extends Component {
                   className="fas fa-user fa-lg"
                   style={{ paddingRight: "0.2em" }}
                 />
-                {this.state.username}
+                {this.state.name}
               </p>
               <li className={this.state.askingInput ? "active" : null}>
                 <p onClick={this.handleTab} id="home">
@@ -209,7 +213,7 @@ class Sidebar extends Component {
                 onClick={this.handleClick}
                 className="btn btn-info btn-xs"
               >
-                <i className="fas fa-align-left" />
+                <i className="fas fa-align-left fa-lg" />
                 {/* <span>Toggle Sidebar</span> */}
               </button>
 
@@ -225,10 +229,7 @@ class Sidebar extends Component {
                   onClick={this.logout}
                 >
                   Logout
-                  <i
-                    className="fas fa-sign-out-alt pad-takeinput"
-                    style={{ paddingLeft: "0.2em" }}
-                  />
+                  <i className="fas fa-sign-out-alt fa-lg logoutbtn" />
                   {/* <span>Logout</span> */}
                 </button>
               )}

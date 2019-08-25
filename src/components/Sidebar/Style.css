@@ -48,6 +48,9 @@ a:focus {
 .pad-takeinput {
   margin-right: 5px;
 }
+.logoutbtn {
+  margin-left: 5px;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

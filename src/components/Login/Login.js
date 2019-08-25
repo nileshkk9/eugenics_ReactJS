@@ -10,6 +10,8 @@ class Login extends Component {
   state = {
     username: "",
     password: "",
+    name: "",
+    place: "",
     isSuccess: "",
     isloading: false
   };
@@ -51,7 +53,12 @@ class Login extends Component {
       })
       .then(res => {
         // console.log(res.data);
-        this.setState({ isSuccess: res.data.success, isloading: false });
+        this.setState({
+          isSuccess: res.data.success,
+          isloading: false,
+          name: res.data.name,
+          place: res.data.place
+        });
         if (this.state.isSuccess === 0) {
           wrongLogin.display = "block";
         } else {
@@ -59,6 +66,7 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        this.setState({ isloading: false });
         console.log(error);
       });
   };
