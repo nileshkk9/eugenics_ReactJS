@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,} from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
 class ChangePassword extends Component {
@@ -10,7 +10,8 @@ class ChangePassword extends Component {
     email: "",
     token: "",
     isSuccess: "",
-    isloading: false
+    isloading: false,
+    redirect: false
   };
   componentDidMount() {
     const { token, email } = this.props.match.params;
@@ -42,7 +43,11 @@ class ChangePassword extends Component {
     axios
       .post(URL, { token, email, password })
       .then(res => {
-        this.setState({ isloading: false, isSuccess: res.data.status });
+        this.setState({
+          isloading: false,
+          isSuccess: res.data.status,
+          redirect: true
+        });
         console.log(res.data);
       })
       .catch(e => {
@@ -51,6 +56,14 @@ class ChangePassword extends Component {
       });
   };
 
+  renderRedirect = () => {
+    setTimeout(() => {
+      if (this.state.redirect) {
+        console.log("redirecting");
+        this.props.history.push("/");
+      }
+    }, 5000);
+  };
   validateForm = () => {
     return (
       this.state.password.length > 9 &&
@@ -62,6 +75,7 @@ class ChangePassword extends Component {
   render() {
     return (
       <div>
+        {this.renderRedirect()}
         <div className="body-login">
           <div className="container-login">
             <div className="header-login">
@@ -114,7 +128,7 @@ class ChangePassword extends Component {
             <div style={valid}>
               <b>
                 {this.state.isSuccess === 1
-                  ? "Password Changed Successfully!"
+                  ? "Password Changed Successfully! \n Redirecting....."
                   : null}
               </b>
             </div>
