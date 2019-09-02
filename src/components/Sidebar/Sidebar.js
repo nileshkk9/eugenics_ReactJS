@@ -22,7 +22,7 @@ class Sidebar extends PureComponent {
     askingDownload: false
   };
   // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.askingList === nextState.askingList) return false;
+  //   if (this.state.json === nextState.json) return false;
   //   return true;
   // }
   //Get location from gps and geo reverse encoding
@@ -38,9 +38,7 @@ class Sidebar extends PureComponent {
           latitude: position.coords.latitude
         };
         console.log(location);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${
-          location.latitude
-        }&lon=${location.longitude}`;
+        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.latitude}&lon=${location.longitude}`;
         // console.log(url);
 
         fetch(url)
@@ -121,9 +119,7 @@ class Sidebar extends PureComponent {
     //to request data
     //if sortOption is date sort by date else sort by the given options in php server side
 
-    const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
-      this.state.username
-    }&pagenumber=${pagenumber}&sortby=${sortOption}`;
+    const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${this.state.username}&pagenumber=${pagenumber}&sortby=${sortOption}`;
 
     console.log(URL);
     this.axiosRequest(URL);

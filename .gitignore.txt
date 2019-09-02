@@ -1,1 +1,5 @@
-/node_modules
+[[local|localrc]]
+ADMIN_PASSWORD=nilesh
+DATABASE_PASSWORD=nilesh
+RABBIT_PASSWORD=nilesh
+SERVICE_PASSWORD=nilesh

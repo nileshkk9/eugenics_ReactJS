@@ -9,13 +9,17 @@ import Login from "./components/Login/Login";
 import NotFound from "./components/NotFound/NotFound";
 import PrivateRouter from "./components/PrivateRouter";
 // import Listview from "./components/Listview/Listview";
+import ChangePassword from "./components/ChangePassword/ChangePassword";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 const routing = (
   <BrowserRouter>
     <div>
       <Switch>
         <Route path="/" component={Login} exact />
+        <Route path="/forgot-password" component={ForgotPassword} exact />
         <PrivateRouter path="/main" component={Main} />
+        <Route path="/:token/:email" component={ChangePassword} exact />
         {/* <PrivateRouter path="/entries" component={Listview} /> */}
         <Route component={NotFound} />
       </Switch>

@@ -76,7 +76,11 @@ class Login extends Component {
       <div>
         <div className="body-login">
           <div className="container-login">
-            <div className="header-login">LOG IN</div>
+            <div className="header-login">
+              <i className="fas fa-user-lock fa-lg"></i>
+              <br />
+              LOG IN
+            </div>
 
             <div className="tbox-login">
               <i className="fas fa-user" />
@@ -118,7 +122,7 @@ class Login extends Component {
             >
               Invalid username or password
             </div>
-            <Link className="l1-login" to="/">
+            <Link className="l1-login" to="/forgot-password">
               FORGOT PASSWORD
             </Link>
 
