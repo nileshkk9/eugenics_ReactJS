@@ -128,6 +128,17 @@
   color: #585656;
   opacity: 0.6;
 }
+.tbox-login .fa-envelope {
+  margin-left: 5px;
+  color: #585656;
+  opacity: 0.6;
+}
+.tbox-login .fa-fingerprint {
+  margin-left: 5px;
+  color: #585656;
+  opacity: 0.6;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

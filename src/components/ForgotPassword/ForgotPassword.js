@@ -103,5 +103,5 @@ const correctemail = {
   transition: "0.5s all"
 };
 const wrongemail = { ...correctemail, color: "red" };
-console.log(wrongemail);
+// console.log(wrongemail);
 export default ForgotPassword;

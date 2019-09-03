@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import "./Login.css";
-// import Main from "../Main/Main";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import auth from "../auth";
+// import { Link } from "react-router-dom";
+// import auth from "../auth";
 import Spinner from "../Spinner/Spinner";
 
-class Login extends Component {
+class CreateAccount extends Component {
   state = {
     username: "",
     password: "",
@@ -15,20 +13,7 @@ class Login extends Component {
     isSuccess: "",
     isloading: false
   };
-  componentDidMount() {
-    if (localStorage.getItem("LoginData")) {
-      const state = JSON.parse(localStorage.getItem("LoginData"));
-      this.setState({ ...state });
-    }
-  }
-  componentDidUpdate() {
-    if (this.state.isSuccess) {
-      auth.login(() => {
-        localStorage.setItem("LoginData", JSON.stringify(this.state));
-        this.props.history.push("/main");
-      });
-    }
-  }
+
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -77,9 +62,20 @@ class Login extends Component {
         <div className="body-login">
           <div className="container-login">
             <div className="header-login">
-              <i className="fas fa-user-lock fa-lg"></i>
+              <i className="fas fa-address-card fa-lg"></i>
               <br />
-              LOG IN
+              Create Account
+            </div>
+            <div className="tbox-login">
+              <i className="fas fa-fingerprint"></i>
+              <input
+                id="name"
+                type="text"
+                placeholder="name"
+                style={inputArea}
+                onChange={this.handleChange}
+                value={this.state.name}
+              />
             </div>
 
             <div className="tbox-login">
@@ -91,6 +87,18 @@ class Login extends Component {
                 style={inputArea}
                 onChange={this.handleChange}
                 value={this.state.username}
+              />
+            </div>
+
+            <div className="tbox-login">
+              <i className="fas fa-envelope" />
+              <input
+                id="email"
+                type="text"
+                placeholder="email"
+                style={inputArea}
+                onChange={this.handleChange}
+                value={this.state.email}
               />
             </div>
             <div className="tbox-login">
@@ -110,25 +118,9 @@ class Login extends Component {
               onClick={this.handleClick}
               disabled={!this.validateForm()}
             >
-              Login
+              Create Account
             </button>
 
-            <div
-              className={
-                this.state.isSuccess === 0
-                  ? "wrong-login-visible"
-                  : "wrong-login-hidden"
-              }
-            >
-              Invalid username or password
-            </div>
-            <Link className="l1-login" to="/forgot-password">
-              FORGOT PASSWORD
-            </Link>
-
-            <Link className="l2-login" to="/create-account">
-              CREATE AN ACCOUNT
-            </Link>
             {this.state.isloading ? <Spinner /> : null}
           </div>
         </div>
@@ -158,4 +150,4 @@ const wrongLogin = {
   margin: "0px auto",
   transition: "0.5s all"
 };
-export default Login;
+export default CreateAccount;
