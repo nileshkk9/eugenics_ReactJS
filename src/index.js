@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 // import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+// import * as serviceWorker from "./serviceWorker";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Main from "./components/Main/Main";
 import Login from "./components/Login/Login";
