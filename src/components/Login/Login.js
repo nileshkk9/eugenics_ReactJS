@@ -126,9 +126,9 @@ class Login extends Component {
               FORGOT PASSWORD
             </Link>
 
-            <Link className="l2-login" to="/create-account">
+            {/* <Link className="l2-login" to="/create-account">
               CREATE AN ACCOUNT
-            </Link>
+            </Link> */}
             {this.state.isloading ? <Spinner /> : null}
           </div>
         </div>
