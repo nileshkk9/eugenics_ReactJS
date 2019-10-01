@@ -45,9 +45,7 @@ class TakeInput extends Component {
   };
   handleChemist = (e, i) => {
     let updatedArray = [...this.state.form.chemist];
-    // console.log(updatedArray);
     updatedArray[i] = e.target.value;
-    // console.log(updatedArray, this.state.form.chemist);
     this.setState({
       form: { ...this.state.form, chemist: updatedArray }
     });
@@ -58,7 +56,6 @@ class TakeInput extends Component {
     });
   };
   handleSubmit = e => {
-    // console.log(this.state.form);
     this.setState({ isLoading: true });
     const url =
       "https://www.eugenicspharma.in/react_eugenics_reporting/insert.php";
@@ -68,7 +65,6 @@ class TakeInput extends Component {
       location: this.props.send.loc,
       fullAddress: this.props.send.fullAddress
     };
-    console.log(submit_form);
     axios
       .post(url, { submit_form })
       .then(res => {

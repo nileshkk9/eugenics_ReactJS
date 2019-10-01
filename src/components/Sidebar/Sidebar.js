@@ -163,7 +163,7 @@ class Sidebar extends PureComponent {
               </p>
               <li className={this.state.askingInput ? "active" : null}>
                 <p onClick={this.handleTab} id="home">
-                  Home
+                  Upload Data
                 </p>
               </li>
               <li className={this.state.askingList ? "active" : null}>
@@ -173,14 +173,14 @@ class Sidebar extends PureComponent {
               </li>
               <li className={this.state.askingDownload ? "active" : null}>
                 <p onClick={this.handleTab} id="download">
-                  Download
+                  Download Xls
                 </p>
               </li>
-              <li className={null}>
+              {/* <li className={null}>
                 <p onClick={this.handleTab} id="contact">
                   Contact
                 </p>
-              </li>
+              </li> */}
             </ul>
 
             <ul className="list-unstyled CTAs">
@@ -212,22 +212,27 @@ class Sidebar extends PureComponent {
                 <i className="fas fa-align-left fa-lg" />
                 {/* <span>Toggle Sidebar</span> */}
               </button>
-
               {/* Dropdown menu */}
               {this.state.nav === "sidebar" && isMobile ? null : this.state
                   .askingList ? (
                 <Dropmenu sort={this.sortDropmenu} />
               ) : null}
+
               {this.state.nav === "sidebar" && isMobile ? null : (
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={this.logout}
-                >
-                  Logout
-                  <i className="fas fa-sign-out-alt fa-lg logoutbtn" />
-                  {/* <span>Logout</span> */}
-                </button>
+                <React.Fragment>
+                  {this.state.askingInput ? <h5>Upload Entries</h5> : null}
+                  {this.state.askingDownload ? <h5>Download Xls</h5> : null}
+
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={this.logout}
+                  >
+                    Logout
+                    <i className="fas fa-sign-out-alt fa-lg logoutbtn" />
+                    {/* <span>Logout</span> */}
+                  </button>
+                </React.Fragment>
               )}
             </nav>
             {/* -----------------------------------NAVBAR END------------------------------------------ */}

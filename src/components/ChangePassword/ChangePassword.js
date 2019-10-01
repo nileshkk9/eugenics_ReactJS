@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link,} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
 class ChangePassword extends Component {
@@ -66,10 +66,18 @@ class ChangePassword extends Component {
   };
   validateForm = () => {
     return (
-      this.state.password.length > 9 &&
-      this.state.re_password.length > 9 &&
+      this.state.password.length > 5 &&
+      this.state.re_password.length > 5 &&
       this.state.password === this.state.re_password
     );
+  };
+
+  validator = () => {
+    const { password: pass, re_password: repass } = this.state;
+
+    if (pass.length <= 5 && pass.length >= 3) return "Password Too short!";
+    else if (pass.length > 5 && repass.length > 5 && pass !== repass)
+      return "Password does not match!";
   };
 
   render() {
@@ -134,6 +142,7 @@ class ChangePassword extends Component {
             </div>
             <div style={notvalid}>
               <b>{this.state.isSuccess === 0 ? "Token Has Expired!" : null}</b>
+              {this.validator()}
             </div>
 
             <Link className="l2-login" to="/">
