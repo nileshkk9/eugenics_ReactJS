@@ -21,10 +21,7 @@ class Sidebar extends PureComponent {
     askingList: false,
     askingDownload: false
   };
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.json === nextState.json) return false;
-  //   return true;
-  // }
+
   //Get location from gps and geo reverse encoding
   getLocation = () => {
     var location = {
@@ -63,7 +60,7 @@ class Sidebar extends PureComponent {
     window.location.href = "/";
   };
 
-  handlePageChange = pageNumber => {
+  handlePageChange = (pageNumber = 1) => {
     // console.log(pageNumber);
     this.fetchEntries(pageNumber, dropmenu_value);
     this.setState({ activePage: pageNumber });
@@ -85,13 +82,14 @@ class Sidebar extends PureComponent {
         askingList: false,
         askingDownload: false
       });
-    else if (val === "entries")
+    else if (val === "entries") {
       this.setState({
         askingInput: false,
         askingList: true,
         askingDownload: false
       });
-    else if (val === "download")
+      this.handlePageChange();
+    } else if (val === "download")
       this.setState({
         askingInput: false,
         askingList: false,
