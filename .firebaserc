@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "eugenicsapp"
+    "default": "eugenicsapp",
+    "eugenics": "eugenicsapp",
+    "eugenicsapp": "eugenicsapp"
   }
 }

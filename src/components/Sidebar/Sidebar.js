@@ -19,35 +19,35 @@ class Sidebar extends PureComponent {
     isLoading: false,
     askingInput: true,
     askingList: false,
-    askingDownload: false
+    askingDownload: false,
   };
 
   //Get location from gps and geo reverse encoding
   getLocation = () => {
     var location = {
       longitude: "",
-      latitude: ""
+      latitude: "",
     };
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         location = {
           longitude: position.coords.longitude,
-          latitude: position.coords.latitude
+          latitude: position.coords.latitude,
         };
         console.log(location);
         const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.latitude}&lon=${location.longitude}`;
         // console.log(url);
 
         fetch(url)
-          .then(res => res.json())
-          .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             this.setState({
               fullAddress: data.display_name,
-              loc: data.display_name.split(",", 1)[0]
+              loc: data.display_name.split(",", 1)[0],
             });
             // console.log(this.state.fullAddress);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("Unable to fetch location: ", error);
           });
       });
@@ -69,31 +69,31 @@ class Sidebar extends PureComponent {
   handleClick = () => {
     this.setState({
       nav: this.state.nav === "sidebar" ? "sidebar sidebar-active" : "sidebar",
-      sidebarPadding: this.state.sidebarPadding === "260px" ? "20px" : "260px"
+      sidebarPadding: this.state.sidebarPadding === "260px" ? "20px" : "260px",
     });
   };
 
-  handleTab = e => {
+  handleTab = (e) => {
     if (isMobile) this.handleClick();
     const val = e.target.id;
     if (val === "home")
       this.setState({
         askingInput: true,
         askingList: false,
-        askingDownload: false
+        askingDownload: false,
       });
     else if (val === "entries") {
       this.setState({
         askingInput: false,
         askingList: true,
-        askingDownload: false
+        askingDownload: false,
       });
       this.handlePageChange();
     } else if (val === "download")
       this.setState({
         askingInput: false,
         askingList: false,
-        askingDownload: true
+        askingDownload: true,
       });
     console.log(val);
   };
@@ -117,25 +117,61 @@ class Sidebar extends PureComponent {
     //to request data
     //if sortOption is date sort by date else sort by the given options in php server side
 
-    const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${this.state.username}&pagenumber=${pagenumber}&sortby=${sortOption}`;
+    const URL = `https://www.eugenicspharma.in/react_eugenics_reporting/json.php?username=${
+      this.state.username
+    }&pagenumber=${pagenumber}&sortby=${sortOption}&time=${Date.now()}`;
 
     console.log(URL);
     this.axiosRequest(URL);
   };
 
-  axiosRequest = url => {
+  axiosRequest = (url) => {
     Axios.get(url)
-      .then(res => {
+      .then((res) => {
         this.setState({ ...this.state, json: res.data, isLoading: false });
         console.log(this.state.json);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("Unable to fetch: ", error);
       });
   };
 
+  mapList = () => {
+    if (this.state.json.user !== null)
+      return (
+        <React.Fragment>
+          <div className="w3-container">
+            <ul className="w3-ul w3-card-4">
+              {this.state.json.user !== null
+                ? this.state.json.map((data, i) => (
+                    <Listitem data={data} key={i} />
+                  ))
+                : null}
+            </ul>
+          </div>
+          <div className="pagination-listview">
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={450}
+              pageRangeDisplayed={5}
+              itemClass="page-item"
+              linkClass="page-link"
+              onChange={this.handlePageChange}
+            />
+          </div>
+        </React.Fragment>
+      );
+    else
+      return (
+        <div className="noentry">
+          <h3>No entries Found</h3>
+        </div>
+      );
+  };
+
   //dropmenu functions called from dropmenu component
-  sortDropmenu = e => {
+  sortDropmenu = (e) => {
     const option = e.target.value;
     dropmenu_value = option;
     console.log(option);
@@ -248,28 +284,7 @@ class Sidebar extends PureComponent {
               this.state.isLoading ? (
                 <Spinner />
               ) : (
-                <React.Fragment>
-                  <div className="w3-container">
-                    <ul className="w3-ul w3-card-4">
-                      {this.state.json
-                        ? this.state.json.map((data, i) => (
-                            <Listitem data={data} key={i} />
-                          ))
-                        : null}
-                    </ul>
-                  </div>
-                  <div className="pagination-listview">
-                    <Pagination
-                      activePage={this.state.activePage}
-                      itemsCountPerPage={10}
-                      totalItemsCount={450}
-                      pageRangeDisplayed={5}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                      onChange={this.handlePageChange}
-                    />
-                  </div>
-                </React.Fragment>
+                this.mapList()
               )
             ) : null}
             {/* ---------------------------------------- ENTRIES END-------------------------------------------- */}

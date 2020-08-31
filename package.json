@@ -8,8 +8,8 @@
     "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.4",
     "react-js-pagination": "^3.0.2",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.8",
+    "": "^4.3.1",
+    "rreact-router-domeact-scripts": "2.1.8",
     "react-toastify": "^4.5.2",
     "serve": "^11.1.0"
   },

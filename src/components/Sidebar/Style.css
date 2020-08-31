@@ -255,6 +255,11 @@ select:focus {
   margin-left: 5px;
   width: auto;
 }
+
+.noentry {
+  display: flex;
+  justify-content: center;
+}
 /*---------------------------------------
              pagination
 -----------------------------------------*/
