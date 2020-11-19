@@ -190,7 +190,8 @@ class Sidebar extends PureComponent {
             <ul className="list-unstyled">
               <p>
                 <i
-                  className="fas fa-user fa-lg"
+                  className="fas fa-user"
+                  // className="fas fa-thumbs-up fa-5x"
                   style={{ paddingRight: "0.2em" }}
                 />
                 {this.state.name}
