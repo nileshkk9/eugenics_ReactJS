@@ -9,6 +9,7 @@ import Spinner from "../SpinnerV3/Spinner";
 import Dropmenu from "../Dropmenu/Dropmenu";
 import { isMobile } from "react-device-detect";
 import DownloadCSV from "../DownloadCSV/DowloadCSV";
+import { api } from "../../Api/requests";
 class Sidebar extends PureComponent {
   state = {
     nav: "sidebar",
@@ -23,33 +24,23 @@ class Sidebar extends PureComponent {
   };
 
   //Get location from gps and geo reverse encoding
-  getLocation = () => {
+  getLocation = async () => {
     var location = {
       longitude: "",
       latitude: "",
     };
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(async (position) => {
         location = {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
         };
-        console.log(location);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.latitude}&lon=${location.longitude}`;
-        // console.log(url);
 
-        fetch(url)
-          .then((res) => res.json())
-          .then((data) => {
-            this.setState({
-              fullAddress: data.display_name,
-              loc: data.display_name.split(",", 1)[0],
-            });
-            // console.log(this.state.fullAddress);
-          })
-          .catch((error) => {
-            console.log("Unable to fetch location: ", error);
-          });
+        const res = await api.getGeoLocation(location.latitude, location.longitude);
+        this.setState({
+                fullAddress: res.data.display_name,
+                loc: res.data.address.suburb,
+              });
       });
     } else {
       console.log("Geo Location not supported by browser");
@@ -121,7 +112,7 @@ class Sidebar extends PureComponent {
       this.state.username
     }&pagenumber=${pagenumber}&sortby=${sortOption}&time=${Date.now()}`;
 
-    console.log(URL);
+    // console.log(URL);
     this.axiosRequest(URL);
   };
 
@@ -129,7 +120,7 @@ class Sidebar extends PureComponent {
     Axios.get(url)
       .then((res) => {
         this.setState({ ...this.state, json: res.data, isLoading: false });
-        console.log(this.state.json);
+        // console.log(this.state.json);
       })
       .catch((error) => {
         console.log("Unable to fetch: ", error);
@@ -182,6 +173,8 @@ class Sidebar extends PureComponent {
     return (
       <div>
         <div className="wrapper">
+
+          
           <nav className={this.state.nav}>
             <div className="sidebar-header">
               <img src="/logo.png" alt="company logo" />

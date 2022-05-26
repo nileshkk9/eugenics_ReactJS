@@ -93,21 +93,7 @@
   text-align: center;
   color: #448aff;
 }
-.wrong-login-visible {
-  visibility: visible;
-  opacity: 1;
-  display: block;
-  width: 260px;
-  padding: 5px 0;
-  text-decoration: none;
-  color: red;
-  text-align: center;
-  margin: 0px auto;
-  transition: 0.5s all;
-}
-.wrong-login-hidden {
-  visibility: hidden;
-  opacity: 0;
+.wrong-login {
   display: block;
   width: 260px;
   padding: 5px 0;

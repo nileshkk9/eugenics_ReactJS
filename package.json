@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "react": "^16.8.4",
-    "react-device-detect": "^1.7.5",
-    "react-dom": "^16.8.4",
-    "react-js-pagination": "^3.0.2",
-    "": "^4.3.1",
-    "rreact-router-domeact-scripts": "2.1.8",
-    "react-toastify": "^4.5.2",
-    "serve": "^11.1.0"
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.8.1",
+    "axios": "^0.27.2",
+    "react": "^18.1.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "^18.1.0",
+    "react-js-pagination": "^3.0.3",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.1",
+    "serve": "^13.0.2"
   },
   "scripts": {
     "start": "serve -s build",
