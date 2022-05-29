@@ -10,7 +10,7 @@ const getAuthTokenFromLocal = () => {
 };
 
 const eugenics = axios.create({
-  baseURL: "https://eugenics-backend-nileshkk9.vercel.app/",
+  baseURL: "https://eugenics-backend-nileshkk9.vercel.app",
   timeout: 60000,
   headers: { Authorization: getAuthTokenFromLocal() },
 });
