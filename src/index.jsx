@@ -11,6 +11,10 @@ import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import TakeInput from "./components/Main/TakeInput";
+import ViewReport from "./components/ViewReport/ViewReport";
+import DownloadCsv from "./components/DownloadCSV/DownloadCsv";
+
+
 
 const routing = (
   <BrowserRouter>
@@ -20,8 +24,8 @@ const routing = (
       <Route element={<PrivateRoute />}>
         <Route path="main" element={<Main />}>
           <Route path="upload" element={<TakeInput />} />
-          <Route path="reports" element={<NotFound />} />
-          <Route path="download" element={<NotFound />} />
+          <Route path="reports" element={<ViewReport />} />
+          <Route path="download" element={<DownloadCsv />} />
         </Route>
       </Route>
 

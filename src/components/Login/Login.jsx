@@ -4,6 +4,7 @@ import auth from "../auth";
 import Spinner from "../Spinner/Spinner";
 import "./Login.css";
 import { useEffect, useState } from "react";
+import { LOCAL_AUTH_KEY } from "../../utils/constants";
 
 const Login = (props) => {
   const [inputField, setInputField] = useState({
@@ -16,16 +17,16 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("LoginData")){
-      const authToken = JSON.parse(localStorage.getItem("LoginData"));
-      setToken(authToken)
+    if (localStorage.getItem(LOCAL_AUTH_KEY)) {
+      const authToken = JSON.parse(localStorage.getItem(LOCAL_AUTH_KEY));
+      setToken(authToken);
     }
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (token) {
       auth.login(() => {
-        localStorage.setItem("LoginData", JSON.stringify(token));
+        localStorage.setItem(LOCAL_AUTH_KEY, JSON.stringify(token));
         navigate("/main/upload");
       });
     }

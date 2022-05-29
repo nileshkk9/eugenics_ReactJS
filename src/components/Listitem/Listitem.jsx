@@ -8,13 +8,28 @@ const colors = [
   "#D500F9",
   "#FFA726",
   "#1565C0",
-  "#00BCD4"
+  "#00BCD4",
 ];
-const Listitem = props => {
+
+const Listitem = (props) => {
+  
+  const random = () => {
+    return colors[Math.floor(Math.random() * 7 + 1)];
+  };
+
+  const getTime = () => {
+    return new Date(props.data.date).toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   return (
     <li className="w3-bar">
       <div
-        className="circle-listitem w3-hide-small"
+        // w3-hide-small
+        className="circle-listitem "
         style={{ backgroundColor: random() }}
       >
         {props.data.docname.substring(0, 2) === "Dr"
@@ -24,25 +39,24 @@ const Listitem = props => {
               .toUpperCase()
           : props.data.docname[0].toUpperCase()}
       </div>
-      {/* {console.log(props.data)} */}
 
       <div className="items">
         <div className="left-elements">
           <span className="name-listitem">{props.data.docname} </span>
-          <span className="place-listitem">{props.data.place}</span>
+          <span className="place-listitem">{props.data.locname}</span>
         </div>
         <span className="date-listitem">
           {new Date(props.data.date).toShortFormat()}
+          <br />
+          {getTime(props.data.date)}
         </span>
       </div>
     </li>
   );
 };
 
-const random = () => {
-  return colors[Math.floor(Math.random() * 7 + 1)];
-};
-Date.prototype.toShortFormat = function() {
+// eslint-disable-next-line
+Date.prototype.toShortFormat = function () {
   var month_names = [
     "Jan",
     "Feb",
@@ -55,7 +69,7 @@ Date.prototype.toShortFormat = function() {
     "Sep",
     "Oct",
     "Nov",
-    "Dec"
+    "Dec",
   ];
 
   var day = this.getDate();

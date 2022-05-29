@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-
 import "./Style.css";
 import "../Loading/loading.css";
 import "../Loading/loading-btn.css";
@@ -8,6 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { api } from "../../Api/requests";
 import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
+import AddCircle from "@mui/icons-material/AddCircle";
+
 import Autocomplete from "@mui/material/Autocomplete";
 
 const initialState = {
@@ -47,6 +49,7 @@ const TakeInput = () => {
   useEffect(() => {
     fetchAutocomplete();
     setLocation({ ...currentLocation });
+    // eslint-disable-next-line
   }, []);
 
   const fetchAutocomplete = async () => {
@@ -212,17 +215,18 @@ const TakeInput = () => {
 
         <ToastContainer />
       </div>
-      <button
-        type="button"
-        className="btn btn-success ld-ext-right running"
-        onClick={handleSubmit}
-        disabled={!validateForm()}
-      >
-        <i className="fas fa-notes-medical pad-takeinput fa-lg" />
-        {isLoading ? <div className="ld ld-ring ld-spin" /> : null}
-
-        <span>Submit</span>
-      </button>
+       <LoadingButton
+          loading={isLoading}
+          loadingPosition="start"
+          startIcon={<AddCircle />}
+          variant="contained"
+          onClick={handleSubmit}
+          size="large"
+          disabled={!validateForm()}
+          color="success"
+        >
+          Submit
+        </LoadingButton>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import "./Style.css";
+import { LOCAL_AUTH_KEY } from "../../utils/constants";
 import TakeInput from "./TakeInput";
 import { Link } from "react-router-dom";
 import Listitem from "../Listitem/Listitem";
@@ -8,7 +9,7 @@ import Axios from "axios";
 import Spinner from "../SpinnerV3/Spinner";
 import Dropmenu from "../Dropmenu/Dropmenu";
 import { isMobile } from "react-device-detect";
-import DownloadCSV from "../DownloadCSV/DowloadCSV";
+import DownloadCSV from "./DowloadCSV";
 import { api } from "../../Api/requests";
 class Sidebar extends PureComponent {
   state = {
@@ -47,7 +48,7 @@ class Sidebar extends PureComponent {
     }
   };
   logout = () => {
-    localStorage.removeItem("LoginData");
+    localStorage.removeItem(LOCAL_AUTH_KEY);
     window.location.href = "/";
   };
 
@@ -92,8 +93,8 @@ class Sidebar extends PureComponent {
   componentDidMount() {
     this.getLocation();
 
-    if (localStorage.getItem("LoginData")) {
-      const state = JSON.parse(localStorage.getItem("LoginData"));
+    if (localStorage.getItem(LOCAL_AUTH_KEY)) {
+      const state = JSON.parse(localStorage.getItem(LOCAL_AUTH_KEY));
       // console.log(state);
       this.setState({ ...state }, () => {
         this.fetchEntries(this.state.activePage);

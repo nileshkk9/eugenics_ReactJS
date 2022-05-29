@@ -206,8 +206,23 @@ a.article:hover {
   #sidebarCollapse span {
     display: none;
   }
+  
+  #upload-report-form > div {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+  }
 }
 
+@media only screen and (max-width: 480px) {
+  #upload-report-form > div {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+  }
+}
 /* ---------------------------------------------------
     content mine
 ----------------------------------------------------- */

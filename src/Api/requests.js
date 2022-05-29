@@ -1,10 +1,10 @@
 import axios from "axios";
-
+import { LOCAL_AUTH_KEY } from "../utils/constants";
 const api = {};
 
 const getAuthTokenFromLocal = () => {
-  if (localStorage.getItem("LoginData")) {
-    const authToken = JSON.parse(localStorage.getItem("LoginData"));
+  if (localStorage.getItem(LOCAL_AUTH_KEY)) {
+    const authToken = JSON.parse(localStorage.getItem(LOCAL_AUTH_KEY));
     return authToken;
   }
 };
@@ -68,22 +68,24 @@ api.getReports = async (pageNumber) => {
     const res = await eugenics.get(`/reports/${pageNumber}`);
     return await res;
   } catch (error) {
-    return error;
+    return error.response;
   }
 };
 
 api.getExcel = async (data) => {
   try {
-    const res = await eugenics.post("/reports/create-excel", data);
+    const res = await eugenics.post("/reports/create-excel", data, {
+      responseType: "arraybuffer",
+    });
     return await res;
   } catch (error) {
-    return error;
+    return error.response;
   }
 };
 
-api.getDoctors = async (prefix) => {
+api.getDoctors = async () => {
   try {
-    const res = await eugenics.post(`/doctors`);
+    const res = await eugenics.post(`/reports/doctors`);
     return await res;
   } catch (error) {
     return error.response;
@@ -92,21 +94,31 @@ api.getDoctors = async (prefix) => {
 
 api.getQualification = async () => {
   try {
-    const res = await eugenics.post(`/qualifications`);
+    const res = await eugenics.post(`/reports/qualifications`);
     return await res;
   } catch (error) {
     return error.response;
   }
 };
 
-api.getDocLocation = async (prefix) => {
+api.getDocLocation = async () => {
   try {
-    const res = await eugenics.post(`/locations`);
+    const res = await eugenics.post(`/reports/locations`);
     return await res;
   } catch (error) {
     return error.response;
   }
 };
+
+api.getUser = async () => {
+  try {
+    const res = await eugenics.get(`/user/me`);
+    return await res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 api.getGeoLocation = async (latitude, longitude) => {
   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
   try {
@@ -116,6 +128,5 @@ api.getGeoLocation = async (latitude, longitude) => {
     return error;
   }
 };
-
 
 export { api };

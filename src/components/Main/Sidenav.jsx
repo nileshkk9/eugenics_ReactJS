@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Sidenav = ({nav, currentLocation}) =>{
+const Sidenav = ({nav, currentLocation, toggleSideNav, user}) =>{
   
     return (
         <nav className={nav}>
@@ -14,28 +14,23 @@ const Sidenav = ({nav, currentLocation}) =>{
                   className="fas fa-user"
                   style={{ paddingRight: "0.2em" }}
                 />
-                {"NAME"}
+                {user.name}
               </p>
-              <li className={"active"}>
-                <Link onClick="" id="home" to="upload">
+              <li className="active">
+                <Link id="home" to="upload" onClick={toggleSideNav}>
                   Upload Data
                 </Link>
               </li>
-              <li className={"active"}>
-                <Link onClick="" id="entries" to="reports">
+              <li className={""}>
+                <Link id="entries" to="reports" onClick={toggleSideNav}>
                   Entries
                 </Link>
               </li>
-              <li className={"active"}>
-                <p onClick="" id="download">
-                  Download Xls
-                </p>
+              <li className={""}>
+                <Link  id="download" to="download" onClick={toggleSideNav}>
+                  Download Excel
+                </Link>
               </li>
-              {/* <li className={null}>
-                <p onClick={this.handleTab} id="contact">
-                  Contact
-                </p>
-              </li> */}
             </ul>
 
             <ul className="list-unstyled CTAs">
