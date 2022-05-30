@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOCAL_AUTH_KEY } from "../utils/constants";
+import { LOCAL_AUTH_KEY, API_URL } from "../utils/constants";
 const api = {};
 
 const getAuthTokenFromLocal = () => {
@@ -10,7 +10,7 @@ const getAuthTokenFromLocal = () => {
 };
 
 const eugenics = axios.create({
-  baseURL: "https://eugenics-backend-nileshkk9.vercel.app",
+  baseURL: API_URL,
   timeout: 60000,
   headers: { Authorization: getAuthTokenFromLocal() },
 });

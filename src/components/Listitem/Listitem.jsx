@@ -12,11 +12,9 @@ const colors = [
 ];
 
 const Listitem = (props) => {
-  
   const random = () => {
     return colors[Math.floor(Math.random() * 7 + 1)];
   };
-
   const getTime = () => {
     return new Date(props.data.date).toLocaleString("en-US", {
       hour: "2-digit",
@@ -24,14 +22,10 @@ const Listitem = (props) => {
       hour12: true,
     });
   };
-
   return (
     <li className="w3-bar">
-      <div
-        // w3-hide-small
-        className="circle-listitem "
-        style={{ backgroundColor: random() }}
-      >
+      {/* w3-hide-small */}
+      <div className="circle-listitem" style={{ backgroundColor: random() }}>
         {props.data.docname.substring(0, 2) === "Dr"
           ? props.data.docname
               .substring(3, props.data.docname.length)
