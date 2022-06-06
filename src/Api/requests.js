@@ -9,15 +9,16 @@ const getAuthTokenFromLocal = () => {
   }
 };
 
-const eugenics = axios.create({
-  baseURL: API_URL,
-  timeout: 60000,
-  headers: { Authorization: getAuthTokenFromLocal() },
-});
+const eugenics = () =>
+  axios.create({
+    baseURL: API_URL,
+    timeout: 60000,
+    headers: { Authorization: getAuthTokenFromLocal() },
+  });
 
 api.registerUser = async (data) => {
   try {
-    const res = await eugenics.post("/user/register", data);
+    const res = await eugenics().post("/user/register", data);
     return await res;
   } catch (error) {
     return error;
@@ -26,7 +27,7 @@ api.registerUser = async (data) => {
 
 api.loginUser = async (data) => {
   try {
-    const res = await eugenics.post("/user/login", data);
+    const res = await eugenics().post("/user/login", data);
     return await res;
   } catch (error) {
     return error.response;
@@ -35,7 +36,7 @@ api.loginUser = async (data) => {
 
 api.sendRecoveryMail = async (data) => {
   try {
-    const res = await eugenics.post("/user/password-reset", data);
+    const res = await eugenics().post("/user/password-reset", data);
     return await res;
   } catch (error) {
     return error.response;
@@ -44,7 +45,7 @@ api.sendRecoveryMail = async (data) => {
 
 api.setNewPassword = async (email, token, data) => {
   try {
-    const res = await eugenics.post(
+    const res = await eugenics().post(
       `/user/password-reset/${email}/${token}`,
       data
     );
@@ -56,7 +57,7 @@ api.setNewPassword = async (email, token, data) => {
 
 api.publishReport = async (data) => {
   try {
-    const res = await eugenics.post("/report", data);
+    const res = await eugenics().post("/report", data);
     return await res;
   } catch (error) {
     return error.response;
@@ -65,7 +66,7 @@ api.publishReport = async (data) => {
 
 api.getReports = async (pageNumber) => {
   try {
-    const res = await eugenics.get(`/reports/${pageNumber}`);
+    const res = await eugenics().get(`/reports/${pageNumber}`);
     return await res;
   } catch (error) {
     return error.response;
@@ -74,7 +75,7 @@ api.getReports = async (pageNumber) => {
 
 api.getExcel = async (data) => {
   try {
-    const res = await eugenics.post("/reports/create-excel", data, {
+    const res = await eugenics().post("/reports/create-excel", data, {
       responseType: "arraybuffer",
     });
     return await res;
@@ -85,7 +86,7 @@ api.getExcel = async (data) => {
 
 api.getDoctors = async () => {
   try {
-    const res = await eugenics.post(`/reports/doctors`);
+    const res = await eugenics().post(`/reports/doctors`);
     return await res;
   } catch (error) {
     return error.response;
@@ -94,7 +95,7 @@ api.getDoctors = async () => {
 
 api.getQualification = async () => {
   try {
-    const res = await eugenics.post(`/reports/qualifications`);
+    const res = await eugenics().post(`/reports/qualifications`);
     return await res;
   } catch (error) {
     return error.response;
@@ -103,7 +104,7 @@ api.getQualification = async () => {
 
 api.getDocLocation = async () => {
   try {
-    const res = await eugenics.post(`/reports/locations`);
+    const res = await eugenics().post(`/reports/locations`);
     return await res;
   } catch (error) {
     return error.response;
@@ -112,7 +113,7 @@ api.getDocLocation = async () => {
 
 api.getUser = async () => {
   try {
-    const res = await eugenics.get(`/user/me`);
+    const res = await eugenics().get(`/user/me`);
     return await res;
   } catch (error) {
     return error.response;

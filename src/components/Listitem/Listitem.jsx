@@ -22,6 +22,13 @@ const Listitem = (props) => {
       hour12: true,
     });
   };
+  const doctorName = props.data.docname
+    .toLowerCase()
+    .replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+  const locationName = props.data.locname
+    .toLowerCase()
+    .replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+
   return (
     <li className="w3-bar">
       {/* w3-hide-small */}
@@ -36,8 +43,8 @@ const Listitem = (props) => {
 
       <div className="items">
         <div className="left-elements">
-          <span className="name-listitem">{props.data.docname} </span>
-          <span className="place-listitem">{props.data.locname}</span>
+          <span className="name-listitem">{`Dr. ${doctorName}`} </span>
+          <span className="place-listitem">{locationName}</span>
         </div>
         <span className="date-listitem">
           {new Date(props.data.date).toShortFormat()}
