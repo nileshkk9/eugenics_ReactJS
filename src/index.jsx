@@ -29,7 +29,7 @@ const routing = (
         </Route>
       </Route>
 
-      <Route path="/:token/:email" element={<ChangePassword />} />
+      <Route path="/:email/:token" element={<ChangePassword />} />
       <Route path="/create-account" element={<CreateAccount />} />
       <Route component={NotFound} />
     </Routes>

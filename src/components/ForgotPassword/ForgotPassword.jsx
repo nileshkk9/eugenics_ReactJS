@@ -15,6 +15,7 @@ const ForgotPassword = () => {
     const res = await api.sendRecoveryMail({email});
     if (res.status === 200) setSuccessMsg(res.data.message);
     else setErrorMsg(res.data.error);
+    setIsLoading(false);
   };
 
   return (
