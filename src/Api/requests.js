@@ -43,6 +43,15 @@ api.sendRecoveryMail = async (data) => {
   }
 };
 
+api.verifyPasswordResetToken = async (data) => {
+  try {
+    const res = await eugenics().post(`/user/password-reset/${data.email}/${data.token}`, data);
+    return await res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 api.setNewPassword = async (email, token, data) => {
   try {
     const res = await eugenics().post(

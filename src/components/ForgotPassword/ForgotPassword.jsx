@@ -43,7 +43,7 @@ const ForgotPassword = () => {
           </button>
 
           <div style={successMsg ? correctemail : wrongemail}>
-            <b>{successMsg || errorMsg}</b>
+            {successMsg || errorMsg}
           </div>
           {/* <div style={wrongemail}>
             <b>{errorMsg}</b>
