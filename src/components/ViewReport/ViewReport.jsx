@@ -36,7 +36,7 @@ const Main = () => {
     <div>
       {isLoading ? (
         <Spinner />
-      ) : reports ? (
+      ) : reports.length > 0 ? (
         <div>
           <div className="w3-container">
             <ul className="w3-ul w3-card-4">
