@@ -2,6 +2,9 @@
   "projects": {
     "default": "eugenicsapp",
     "eugenics": "eugenicsapp",
-    "eugenicsapp": "eugenicsapp"
-  }
+    "eugenicsapp": "eugenicsapp",
+    "eugenicsappALIAS": "eugenicsapp"
+  },
+  "targets": {},
+  "etags": {}
 }

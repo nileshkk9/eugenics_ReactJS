@@ -31,7 +31,7 @@ const Main = () => {
 
   const getGeoLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
+     return navigator.geolocation.getCurrentPosition(async (position) => {
         const res = await api.getGeoLocation(
           position.coords.latitude,
           position.coords.longitude
@@ -54,6 +54,7 @@ const Main = () => {
       console.log("error", userRes);
     }
   };
+
   return (
     <div>
       <div className="wrapper">

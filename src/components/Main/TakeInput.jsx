@@ -24,10 +24,6 @@ const initialState = {
 const TakeInput = () => {
   // form states
   const [form, setForm] = useState(initialState);
-  const [location, setLocation] = useState({
-    geolocation: "",
-    fullgeolocation: "",
-  });
 
   const [doctors, setDoctors] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -48,9 +44,9 @@ const TakeInput = () => {
 
   useEffect(() => {
     fetchAutocomplete();
-    setLocation({ ...currentLocation });
     // eslint-disable-next-line
   }, []);
+
 
   const fetchAutocomplete = async () => {
     const doctorsRes = await api.getDoctors();
@@ -87,7 +83,7 @@ const TakeInput = () => {
   };
 
   const handleSubmit = async () => {
-    const formData = { ...form, ...location };
+    const formData = { ...form, ...currentLocation };
     console.log(formData);
     setIsLoading(true);
     const res = await api.publishReport(formData);
@@ -106,6 +102,7 @@ const TakeInput = () => {
         <Autocomplete
           disablePortal
           options={doctors}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           onChange={(e, value) =>
             setForm((prevState) => ({
               ...prevState,
@@ -129,6 +126,7 @@ const TakeInput = () => {
         <Autocomplete
           disablePortal
           options={locations}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           value={form.locname}
           onChange={(e, value) =>
             setForm((prevState) => ({
@@ -152,6 +150,7 @@ const TakeInput = () => {
         <Autocomplete
           disablePortal
           options={qualifications}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           value={form.qualification}
           onChange={(e, value) =>
             setForm((prevState) => ({
