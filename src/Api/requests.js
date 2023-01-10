@@ -45,7 +45,10 @@ api.sendRecoveryMail = async (data) => {
 
 api.verifyPasswordResetToken = async (data) => {
   try {
-    const res = await eugenics().post(`/user/password-reset/${data.email}/${data.token}`, data);
+    const res = await eugenics().post(
+      `/user/password-reset/${data.email}/${data.token}`,
+      data
+    );
     return await res;
   } catch (error) {
     return error.response;
@@ -124,6 +127,24 @@ api.getUser = async () => {
   try {
     const res = await eugenics().get(`/user/me`);
     return await res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+api.getRegionalUsers = async () => {
+  try {
+    const res = await eugenics().get(`/user/all`);
+    return await res.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+api.getEntries = async (data) => {
+  try {
+    const res = await eugenics().post(`/regional-report`, data);
+    return await res.data;
   } catch (error) {
     return error.response;
   }

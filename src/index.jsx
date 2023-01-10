@@ -13,8 +13,7 @@ import CreateAccount from "./components/CreateAccount/CreateAccount";
 import TakeInput from "./components/Main/TakeInput";
 import ViewReport from "./components/ViewReport/ViewReport";
 import DownloadCsv from "./components/DownloadCSV/DownloadCsv";
-
-
+import RegionalReport from "./components/RegionalReport/RegionalReport";
 
 const routing = (
   <BrowserRouter>
@@ -26,6 +25,7 @@ const routing = (
           <Route path="upload" element={<TakeInput />} />
           <Route path="reports" element={<ViewReport />} />
           <Route path="download" element={<DownloadCsv />} />
+          <Route path="regional-report" element={<RegionalReport />} />
         </Route>
       </Route>
 

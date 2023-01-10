@@ -6,7 +6,7 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { LOCAL_AUTH_KEY } from "../../utils/constants";
 
-const Login = (props) => {
+const Login = () => {
   const [inputField, setInputField] = useState({
     username: "",
     password: "",
