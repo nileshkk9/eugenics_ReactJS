@@ -7,8 +7,8 @@ const LEVEL = {
   MANAGER: "MANAGER",
   ADMIN: "ADMIN",
 };
-const API_URL = "https://eugenics-backend-nileshkk9.vercel.app";
-// const API_URL = "http://localhost:2222";
+// const API_URL = "https://eugenics-backend-nileshkk9.vercel.app";
+const API_URL = "http://localhost:2222";
 
 export {
   SIDEBAR,

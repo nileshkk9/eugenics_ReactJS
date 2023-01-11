@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { LEVEL } from "../../utils/constants";
 
 const Sidenav = ({ nav, currentLocation, toggleSideNav, user }) => {
-  console.log(user);
   return (
     <nav className={nav}>
       <div className="sidebar-header">

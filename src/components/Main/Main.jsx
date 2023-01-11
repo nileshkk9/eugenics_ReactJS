@@ -31,14 +31,15 @@ const Main = () => {
 
   const getGeoLocation = () => {
     if (navigator.geolocation) {
-     return navigator.geolocation.getCurrentPosition(async (position) => {
+      return navigator.geolocation.getCurrentPosition(async (position) => {
         const res = await api.getGeoLocation(
           position.coords.latitude,
           position.coords.longitude
         );
+        console.log(res);
         setLocation({
           fullgeolocation: res.data.display_name,
-          geolocation: res.data.address.suburb,
+          geolocation: res.data.address.county,
         });
       });
     } else {

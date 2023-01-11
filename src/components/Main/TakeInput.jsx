@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+// import { useOutletContext } from "react-router-dom";
 import "./Style.css";
 import "../Loading/loading.css";
 import "../Loading/loading-btn.css";
@@ -28,11 +28,12 @@ const TakeInput = () => {
 
   const [doctors, setDoctors] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [gpsLocation, setGpsLocation] = useState({
+    geolocation: "",
+    fullgeolocation: "",
+  });
   const [qualifications, setQualifications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  // props
-  const { location: currentLocation } = useOutletContext();
 
   const validateForm = () => {
     return (
@@ -40,11 +41,27 @@ const TakeInput = () => {
       form.locname.length > 1 &&
       form.qualification.length > 1 &&
       form.partner.length > 1 &&
-      currentLocation.fullgeolocation !== ""
+      gpsLocation.fullgeolocation !== ""
     );
   };
-
+  const getGeoLocation = () => {
+    if (navigator.geolocation) {
+      return navigator.geolocation.getCurrentPosition(async (position) => {
+        const res = await api.getGeoLocation(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        setGpsLocation({
+          fullgeolocation: res.data.display_name,
+          geolocation: res.data.address.suburb,
+        });
+      });
+    } else {
+      console.log("Geo Location not supported by browser");
+    }
+  };
   useEffect(() => {
+    getGeoLocation();
     fetchAutocomplete();
     // eslint-disable-next-line
   }, []);
@@ -84,7 +101,7 @@ const TakeInput = () => {
   };
 
   const handleSubmit = async () => {
-    const formData = { ...form, ...currentLocation };
+    const formData = { ...form, ...gpsLocation };
     console.log(formData);
     setIsLoading(true);
     const res = await api.publishReport(formData);
@@ -104,7 +121,7 @@ const TakeInput = () => {
   return (
     <div>
       <div id="upload-report-form">
-        {currentLocation.fullgeolocation === "" ? (
+        {gpsLocation.fullgeolocation === "" ? (
           <Alert severity="warning">Turn on Location to submit form</Alert>
         ) : null}
 
