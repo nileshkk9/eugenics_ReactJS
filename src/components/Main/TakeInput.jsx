@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AddCircle from "@mui/icons-material/AddCircle";
+import MuiAlert from "@mui/material/Alert";
 
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -38,7 +39,8 @@ const TakeInput = () => {
       form.docname.length > 1 &&
       form.locname.length > 1 &&
       form.qualification.length > 1 &&
-      form.partner.length > 1
+      form.partner.length > 1 &&
+      currentLocation.fullgeolocation !== ""
     );
   };
 
@@ -46,7 +48,6 @@ const TakeInput = () => {
     fetchAutocomplete();
     // eslint-disable-next-line
   }, []);
-
 
   const fetchAutocomplete = async () => {
     const doctorsRes = await api.getDoctors();
@@ -96,9 +97,17 @@ const TakeInput = () => {
     setIsLoading(false);
     resetStates();
   };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert ref={ref} variant="filled" {...props} />;
+  });
   return (
     <div>
       <div id="upload-report-form">
+        {currentLocation.fullgeolocation === "" ? (
+          <Alert severity="warning">Turn on Location to submit form</Alert>
+        ) : null}
+
         <Autocomplete
           disablePortal
           options={doctors}
@@ -214,18 +223,18 @@ const TakeInput = () => {
 
         <ToastContainer />
       </div>
-       <LoadingButton
-          loading={isLoading}
-          loadingPosition="start"
-          startIcon={<AddCircle />}
-          variant="contained"
-          onClick={handleSubmit}
-          size="large"
-          disabled={!validateForm()}
-          color="success"
-        >
-          Submit
-        </LoadingButton>
+      <LoadingButton
+        loading={isLoading}
+        loadingPosition="start"
+        startIcon={<AddCircle />}
+        variant="contained"
+        onClick={handleSubmit}
+        size="large"
+        disabled={!validateForm()}
+        color="success"
+      >
+        Submit
+      </LoadingButton>
     </div>
   );
 };

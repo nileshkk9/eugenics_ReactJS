@@ -86,7 +86,7 @@ const RegionalReport = () => {
           {users.length > 0 &&
             users.map((user, key) => (
               <MenuItem value={user.username} key={key}>
-                {user.username}
+                {user.name}
               </MenuItem>
             ))}
         </Select>
