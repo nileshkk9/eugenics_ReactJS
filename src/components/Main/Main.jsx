@@ -31,17 +31,22 @@ const Main = () => {
 
   const getGeoLocation = () => {
     if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(async (position) => {
-        const res = await api.getGeoLocation(
-          position.coords.latitude,
-          position.coords.longitude
-        );
-        console.log(res);
-        setLocation({
-          fullgeolocation: res.data.display_name,
-          geolocation: res.data.address.county,
-        });
-      });
+      return navigator.geolocation.watchPosition(
+        async (position) => {
+          const res = await api.getGeoLocation(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          setLocation({
+            fullgeolocation: res.data.display_name,
+            geolocation: res.data.address.suburb || res.data.address.county,
+          });
+        },
+        (error) => {},
+        {
+          enableHighAccuracy: true,
+        }
+      );
     } else {
       console.log("Geo Location not supported by browser");
     }

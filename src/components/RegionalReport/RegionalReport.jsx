@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { api } from "../../Api/requests";
 import "./RegionalReport.css";
-
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
 import DataArrayIcon from "@mui/icons-material/DataArray";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -22,7 +23,7 @@ const RegionalReport = () => {
 
   const [isBtnLoading, setIsBtnLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [showTable, setShowTable] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [entries, setEntries] = useState([]);
   useEffect(() => {
     getUsernames();
@@ -39,18 +40,14 @@ const RegionalReport = () => {
       startDate: new Date(startDate),
       endDate,
     });
+    setIsVisible(true);
     setEntries(
       res.map((item) => ({
         ...item,
-        date:
-          new Date(item.date).toDateString() +
-          ", " +
-          new Date(item.date).toLocaleTimeString(),
+        date: new Date(item.date).toLocaleString(),
       }))
     );
-    if (entries.length > 0 || res.length > 0) {
-      setShowTable(true);
-    }
+
     setIsBtnLoading(false);
   };
   const validateForm = () => {
@@ -129,7 +126,7 @@ const RegionalReport = () => {
           Submit
         </LoadingButton>
       </FormControl>
-      {showTable ? (
+      {entries.length > 0 ? (
         <DataGrid
           rows={entries}
           columns={columns}
@@ -137,7 +134,15 @@ const RegionalReport = () => {
           loading={isBtnLoading}
           components={{ Toolbar: GridToolbar }}
         />
-      ) : null}
+      ) : (
+        isVisible && (
+          <Box sx={{ m: 4, width: "100%", maxWidth: 500 }}>
+            <Typography variant="h3" component="h2">
+              No Data Found
+            </Typography>
+          </Box>
+        )
+      )}
     </div>
   );
 };

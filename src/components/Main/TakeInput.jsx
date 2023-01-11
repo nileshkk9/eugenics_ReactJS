@@ -32,30 +32,59 @@ const TakeInput = () => {
     geolocation: "",
     fullgeolocation: "",
   });
+  const [gpsErrorMsg, setGpsErrorMsg] = useState("");
   const [qualifications, setQualifications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
+    // console.log(form, gpsLocation);
     return (
       form.docname.length > 1 &&
       form.locname.length > 1 &&
       form.qualification.length > 1 &&
       form.partner.length > 1 &&
-      gpsLocation.fullgeolocation !== ""
+      gpsLocation.fullgeolocation
     );
   };
   const getGeoLocation = () => {
     if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(async (position) => {
-        const res = await api.getGeoLocation(
-          position.coords.latitude,
-          position.coords.longitude
-        );
-        setGpsLocation({
-          fullgeolocation: res.data.display_name,
-          geolocation: res.data.address.suburb,
-        });
-      });
+      navigator.geolocation.watchPosition(
+        async (position) => {
+          const res = await api.getGeoLocation(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          setGpsLocation({
+            fullgeolocation: res.data.display_name,
+            geolocation: res.data.address.suburb || res.data.address.county,
+          });
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              setGpsErrorMsg(
+                "User denied the request for Geolocation, Location is Mandatory."
+              );
+              break;
+            case error.POSITION_UNAVAILABLE:
+              setGpsErrorMsg("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              setGpsErrorMsg("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              setGpsErrorMsg("An unknown error occurred.");
+              break;
+            default:
+              setGpsErrorMsg("An unknown error occurred.");
+              break;
+          }
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 1800000,
+        }
+      );
     } else {
       console.log("Geo Location not supported by browser");
     }
@@ -105,7 +134,6 @@ const TakeInput = () => {
     console.log(formData);
     setIsLoading(true);
     const res = await api.publishReport(formData);
-    console.log(res);
     if (res.status === 200) {
       notify(res.data.message, "SUCCESS");
     } else {
@@ -121,8 +149,8 @@ const TakeInput = () => {
   return (
     <div>
       <div id="upload-report-form">
-        {gpsLocation.fullgeolocation === "" ? (
-          <Alert severity="warning">Turn on Location to submit form</Alert>
+        {gpsErrorMsg !== "" ? (
+          <Alert severity="warning">{gpsErrorMsg}</Alert>
         ) : null}
 
         <Autocomplete
