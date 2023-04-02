@@ -35,10 +35,13 @@ const RegionalReport = () => {
   };
   const handleSubmit = async () => {
     setIsBtnLoading(true);
+    const endDatePlus1 = new Date(endDate);
+    endDatePlus1.setDate(endDatePlus1.getDate() + 1);
+    console.log(endDate, endDatePlus1);
     const res = await api.getEntries({
       username,
-      startDate: new Date(startDate),
-      endDate,
+      startDate,
+      endDate: endDatePlus1,
     });
     setIsVisible(true);
     setEntries(
@@ -53,20 +56,22 @@ const RegionalReport = () => {
   const validateForm = () => {
     const sDate = new Date(startDate);
     const eDate = new Date(endDate);
-    return sDate <= eDate && username !== "";
+    return (
+      username !== "" && startDate !== null && endDate !== null && sDate <= eDate
+    );
   };
 
   const columns = [
-    { field: "id", headerName: "Id", width: 100 },
+    { field: "id", headerName: "S/N", width: 100 },
     { field: "docname", headerName: "Doctor's Name", width: 200 },
     { field: "docquali", headerName: "Doctor's Qualification", width: 150 },
     { field: "locname", headerName: "Location", width: 150 },
     { field: "chemists", headerName: "Chemists", width: 300 },
     { field: "sample", headerName: "Sample", width: 150 },
-    { field: "partner", headerName: "Partner", width: 150 },
+    { field: "partner", headerName: "Worked With", width: 100 },
     { field: "miscellaneous", headerName: "Miscellaneous", width: 150 },
-    { field: "fullgeolocation", headerName: "Geo Location", width: 500 },
-    { field: "date", headerName: "Created On", width: 250 },
+    { field: "fullgeolocation", headerName: "Geo Location", width: 300 },
+    { field: "date", headerName: "Visited On", width: 250 },
   ];
   return (
     <div>
@@ -94,7 +99,7 @@ const RegionalReport = () => {
             label="Start Date"
             value={startDate}
             onChange={(newValue) => {
-              setStartDate(newValue);
+              setStartDate(new Date(newValue));
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -106,7 +111,7 @@ const RegionalReport = () => {
             label="End Date"
             value={endDate}
             onChange={(newValue) => {
-              setEndDate(newValue);
+              setEndDate(new Date(newValue));
             }}
             renderInput={(params) => <TextField {...params} />}
           />
