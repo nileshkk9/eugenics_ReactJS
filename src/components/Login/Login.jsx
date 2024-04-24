@@ -19,7 +19,12 @@ const Login = () => {
   useEffect(() => {
     if (localStorage.getItem(LOCAL_AUTH_KEY)) {
       const authToken = JSON.parse(localStorage.getItem(LOCAL_AUTH_KEY));
-      setToken(authToken);
+      async function verifyUser() {
+        const res = await api.getUser();
+        if (res.status === 200) setToken(authToken);
+        else navigate("/");
+      }
+      verifyUser();
     }
   }, []);
 
@@ -41,6 +46,7 @@ const Login = () => {
     inputField.username.length > 4 && inputField.password.length > 4;
 
   const handleClick = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     const res = await api.loginUser(inputField);
     if (res.status === 200) setToken(res.data.token);
@@ -50,54 +56,56 @@ const Login = () => {
   return (
     <div>
       <div className="body-login">
-        <div className="container-login">
-          <div className="header-login">
-            <i className="fas fa-user-lock fa-lg"></i>
-            <br />
-            LOG IN
-          </div>
+        <form action="">
+          <div className="container-login">
+            <div className="header-login">
+              <i className="fas fa-user-lock fa-lg"></i>
+              <br />
+              LOG IN
+            </div>
 
-          <div className="tbox-login">
-            <i className="fas fa-user" />
-            <input
-              id="username"
-              type="text"
-              placeholder="username"
-              style={inputArea}
-              onChange={handleChange}
-              value={inputField.username}
-            />
-          </div>
-          <div className="tbox-login">
-            <i className="fas fa-lock" />
-            <input
-              id="password"
-              type="password"
-              placeholder="password"
-              style={inputArea}
-              onChange={handleChange}
-              value={inputField.password}
-            />
-          </div>
-          <button
-            className="btn-login"
-            type="submit"
-            onClick={handleClick}
-            disabled={!validateForm()}
-          >
-            Login
-          </button>
+            <div className="tbox-login">
+              <i className="fas fa-user" />
+              <input
+                id="username"
+                type="text"
+                placeholder="username"
+                style={inputArea}
+                onChange={handleChange}
+                value={inputField.username}
+              />
+            </div>
+            <div className="tbox-login">
+              <i className="fas fa-lock" />
+              <input
+                id="password"
+                type="password"
+                placeholder="password"
+                style={inputArea}
+                onChange={handleChange}
+                value={inputField.password}
+              />
+            </div>
+            <button
+              className="btn-login"
+              type="submit"
+              onClick={handleClick}
+              disabled={!validateForm()}
+            >
+              Login
+            </button>
 
-          <div className="wrong-login">{errMsg}</div>
-          <Link className="l1-login" to="/forgot-password">
-            FORGOT PASSWORD
-          </Link>
+            <div className="wrong-login">{errMsg}</div>
+            <Link className="l1-login" to="/forgot-password">
+              FORGOT PASSWORD
+            </Link>
 
-          <Link className="l2-login" to="/create-account">
-            CREATE AN ACCOUNT
-          </Link>
-          {isLoading ? <Spinner /> : null}
-        </div>
+            <Link className="l2-login" to="/create-account">
+              CREATE AN ACCOUNT
+            </Link>
+            {isLoading ? <Spinner /> : null}
+          </div>
+        </form>
       </div>
     </div>
   );
